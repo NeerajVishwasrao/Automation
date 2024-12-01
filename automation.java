@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class automation {
     public static void main(String[] args) {
         automation g = new automation();
-        // g.createFile();
+        //  g.createFile();
         // g.sleep();
         // g.changeFileName();
         // g.sleep();
@@ -157,7 +157,7 @@ public class automation {
         try {
             for (int i = 0; i < 5; i++) {
 
-                FileWriter fileWriter = new FileWriter("E:\\FileBucket\\eng02_q" + i + ".svg");
+                FileWriter fileWriter = new FileWriter("E:\\FileBucket\\evs04_q" + i + ".svg");
                 String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid\" width=\"60\" height=\"30\" style=\"shape-rendering: auto; display: block; background:not\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><g><circle fill=\"#e15b64\" r=\"10\" cy=\"50\" cx=\"84\">\r\n"
                         + //
                         "    <animate begin=\"0s\" keySplines=\"0 0.5 0.5 1\" values=\"10;0\" keyTimes=\"0;1\" calcMode=\"spline\" dur=\"0.25s\" repeatCount=\"indefinite\" attributeName=\"r\"></animate>\r\n"
