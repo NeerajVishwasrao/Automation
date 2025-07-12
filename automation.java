@@ -9,22 +9,26 @@ import java.util.regex.Pattern;
 public class automation {
     public static void main(String[] args) {
         automation g = new automation();
-        //  g.createFile();
+        //   g.createFile();
         // g.sleep();
-        // g.changeFileName();
+        //  g.changeFileName();
         // g.sleep();
-        // g.deleteFiles();
-        g.addTextToFile();
+        //  g.deleteFiles();
+        // g.addTextToFile();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    ///
+    ///  
+    /// eng  1,2,3 =  onload=reset() .  eng  4,5  onload=reset("not","not")
+    /// math  1,3,4  not present .  2 = onload reset()  5 = onload reset( pass no of objects )
+    /// mar 1,4,5 = onload = reset() , 3 = onload =  hc(not) , 2 = onload not preset
+    
     public void addTextToFile() {
         int errorCount = 0;
         System.out.println("\n\n Adding text into file started -> ");
         try {
             // getting data from folder
-            File allFile = new File("E:\\FileBucket");
+            File allFile = new File("D:\\A ZP\\Automation Prod 1\\FileBucket");
             System.out.println("\n getting all files from folder = " + allFile);
             File[] allFilesArray = allFile.listFiles(); // getting data of files in array format inside folder;s
 
@@ -37,7 +41,7 @@ public class automation {
                 }
             }
             for (int i = 0; i < allFilesArray.length; i++) {
-                File file = new File("E:\\FileBucket\\" + allFilesArray[i].getName());
+                File file = new File("D:\\A ZP\\Automation Prod 1\\" + allFilesArray[i].getName());
                 System.out.println("\n current file = " + file);
 
                 int dotindex = allFilesArray[i].getName().indexOf(".");
@@ -72,6 +76,7 @@ public class automation {
                     while (sc.hasNextLine()) {
                         FileDataArray.add(sc.nextLine());
                     }
+                        String templateName = file.getName().substring(0, indexOfUnderscore);
 
                     Pattern pattern = Pattern.compile("<script" + "\\b");
                     Matcher matcher = pattern.matcher(FileDataArray.get(FileDataArray.size() - 1));
@@ -85,18 +90,34 @@ public class automation {
                             System.out.println(" **Error Script tag already exists");
                         }
                     } else {
-                        String templateName = file.getName().substring(0, indexOfUnderscore);
 
                         String endText = "<script src=\"/t1/" + templateName + ".js\"></script>";
 
                         FileDataArray.add(endText);
                     }
-
                     // script tag added in file in above code ^
 
                     // every line of file added in arralylist in above code ^
-                    String dataToLoad = " onload=\"reset()\" ";
-                    String dataToFind = "viewBox";
+                    String dataToLoad ;
+                    
+                    if (templateName.equals("en04")||templateName.equals("en05")) {
+                        dataToLoad  = " onload=\"reset('not','not')\" ";
+
+                    }
+                   else if (templateName.equals("mr03")) {
+                        dataToLoad  = " onload=\"hc('not')\" ";
+
+                    }
+                    else if (templateName.equals("mt01")||templateName.equals("mt03")||templateName.equals("mt04")||templateName.equals("mr02")) {
+                        dataToLoad  = "";
+
+                    }
+                    else{
+                        dataToLoad  = " onload=\"reset()\" ";
+                        
+                    }
+                    
+                   String  dataToFind = "viewBox";
 
                     pattern = Pattern.compile("\\b" + "onload" + "\\b");
                     matcher = pattern.matcher(FileDataArray.get(0));
@@ -119,7 +140,7 @@ public class automation {
 
                             // first line updated here in above code onload=reset() added ^
 
-                            FileWriter filewriter2 = new FileWriter("E:\\FileBucket\\" + allFilesArray[i].getName(),
+                            FileWriter filewriter2 = new FileWriter("D:\\A ZP\\Automation Prod 1\\FileBucket\\" + allFilesArray[i].getName(),
                                     false);
 
                             for (String line : FileDataArray) {
@@ -155,9 +176,9 @@ public class automation {
         // File file = new File("F:\\java automation\\AjayPalkar.svg");
 
         try {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
 
-                FileWriter fileWriter = new FileWriter("E:\\FileBucket\\evs04_q" + i + ".svg");
+                FileWriter fileWriter = new FileWriter("D:\\A ZP\\Automation Prod 1\\FileBucket\\mt01_q" + i + ".svg");
                 String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid\" width=\"60\" height=\"30\" style=\"shape-rendering: auto; display: block; background:not\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><g><circle fill=\"#e15b64\" r=\"10\" cy=\"50\" cx=\"84\">\r\n"
                         + //
                         "    <animate begin=\"0s\" keySplines=\"0 0.5 0.5 1\" values=\"10;0\" keyTimes=\"0;1\" calcMode=\"spline\" dur=\"0.25s\" repeatCount=\"indefinite\" attributeName=\"r\"></animate>\r\n"
@@ -198,16 +219,16 @@ public class automation {
     ///
     public void changeFileName() {
         try {
-            File file = new File("E:\\FileBucket");
+            File file = new File("D:\\A ZP\\Automation Prod 1\\FileBucket");
             File[] allFilesArray = file.listFiles();
             for (int i = 0; i < allFilesArray.length; i++) {
                 if (allFilesArray[i].isFile()) {
-                    File oneFile = new File("E:\\FileBucket\\" + allFilesArray[i].getName());
+                    File oneFile = new File("D:\\A ZP\\Automation Prod 1\\FileBucket\\" + allFilesArray[i].getName());
                     int extensionIndex = oneFile.getName().indexOf(".");
                     String fileNmWithoutExt = oneFile.getName().substring(0, extensionIndex);
                     // String NameExt = file.getName().substring(indexOfExtension);
 
-                    oneFile.renameTo(new File("E:\\FileBucket\\" + fileNmWithoutExt + ".html"));
+                    oneFile.renameTo(new File("D:\\A ZP\\Automation Prod 1\\FileBucket\\" + fileNmWithoutExt + ".html"));
 
                 }
 
@@ -223,13 +244,13 @@ public class automation {
     public void deleteFiles() {
         try {
 
-            File files = new File("E:\\FileBucket\\");
+            File files = new File("C:\\FileBucket\\");
             File[] allFiles = files.listFiles();
 
             for (int i = 0; i < allFiles.length; i++) {
                 // File file = new File("F:\\java automation\\AjayPalkar" + i + ".html");
 
-                File file = new File("E:\\FileBucket\\" + allFiles[i].getName());
+                File file = new File("C:\\FileBucket\\" + allFiles[i].getName());
                 file.delete();
             }
         } catch (Exception e) {
